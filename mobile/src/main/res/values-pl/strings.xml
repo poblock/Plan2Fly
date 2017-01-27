@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Plan2Fly</string>
+    <string name="searchLabel">Szukaj lotów</string>
+    <string name="prompt_email">Skąd</string>
+    <string name="prompt_password">Dokąd</string>
+    <string name="hopsCount">Przesiadek</string>
+    <string name="toLabel">Dokąd</string>
+    <string name="yearLabel">Rok</string>
+    <string name="monthLabel">Miesiąc</string>
+    <string name="fromLabel">Skąd</string>
+    <string name="dataPowrotuLabel">Powrót</string>
+    <string name="dataWylotuLabel">Wylot</string>
+</resources>
