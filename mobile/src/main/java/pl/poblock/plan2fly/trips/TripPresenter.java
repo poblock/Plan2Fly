@@ -31,7 +31,7 @@ public class TripPresenter implements TripContract.Presenter {
     }
 
     @Override
-    public void openDetails(Podroz podroz) {
-        Log.d("PODROZ","Click "+podroz);
+    public void openDetails(int podroz) {
+        mView.showFlightDetailsUI(podroz);
     }
 }

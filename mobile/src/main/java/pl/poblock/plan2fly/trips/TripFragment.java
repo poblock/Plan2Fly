@@ -1,6 +1,7 @@
 package pl.poblock.plan2fly.trips;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.data.model.Podroz;
+import pl.poblock.plan2fly.tripdetail.DetailActivity;
 
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class TripFragment extends Fragment implements TripContract.View {
 
     private PodrozItemListener listener = new PodrozItemListener() {
         @Override
-        public void OnPodrozClick(Podroz podroz) {
-            mPresenter.openDetails(podroz);
+        public void OnPodrozClick(int podrozPos) {
+            mPresenter.openDetails(podrozPos);
         }
     };
 
@@ -83,6 +85,13 @@ public class TripFragment extends Fragment implements TripContract.View {
 
     @Override
     public void showFlightsOnUI(List<Podroz> mValues) {
+    }
+
+    @Override
+    public void showFlightDetailsUI(int podroz) {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("pos",podroz);
+        startActivity(intent);
     }
 
     @Override

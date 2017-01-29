@@ -54,4 +54,12 @@ public class Repository implements DataSource {
     public void setCachedMiasta(List<Miasto> cachedMiasta) {
         this.cachedMiasta = cachedMiasta;
     }
+
+    public Podroz getCachedResult(int position) {
+        List<Podroz> results = getCachedResults();
+        if(results!=null) {
+            return results.get(position);
+        }
+        return null;
+    }
 }

@@ -7,5 +7,5 @@ import pl.poblock.plan2fly.data.model.Podroz;
  */
 
 public interface PodrozItemListener {
-    void OnPodrozClick(Podroz podroz);
+    void OnPodrozClick(int podrozPos);
 }

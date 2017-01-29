@@ -48,21 +48,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/toLabel"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:imeOptions="actionSend"/>
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <SeekBar
-                    android:id="@+id/monthBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="11"
-                    android:progress="4"
-                    android:layout_weight="1"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <EditText
                     android:id="@+id/month"
@@ -72,7 +64,19 @@
                     android:text="5"
                     android:maxLines="1" />
 
+
             </android.support.design.widget.TextInputLayout>
+            <SeekBar
+                android:id="@+id/monthBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="11"
+                android:progress="4"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp"
+                android:mirrorForRtl="false" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

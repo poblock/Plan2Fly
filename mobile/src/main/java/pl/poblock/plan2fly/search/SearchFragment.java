@@ -7,14 +7,17 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -53,6 +56,20 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         mSkadView = (AutoCompleteTextView) view.findViewById(R.id.from);
         mDokadView = (AutoCompleteTextView) view.findViewById(R.id.to);
+
+        mDokadView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    if(presenter!=null) {
+                        presenter.performSearch();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
         mMonthView = (EditText) view.findViewById(R.id.month);
         mMonthBar = (SeekBar) view.findViewById(R.id.monthBar);
         mMonthBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

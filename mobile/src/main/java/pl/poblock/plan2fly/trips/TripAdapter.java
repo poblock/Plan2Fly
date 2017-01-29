@@ -50,7 +50,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mItemListener.OnPodrozClick(mValues.get(position));
+                mItemListener.OnPodrozClick(position);
             }
         });
     }
@@ -73,7 +73,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mCena = (TextView) view.findViewById(R.id.cenaRazem);
+            mCena = (TextView) view.findViewById(R.id.detailCenaRazem);
             mDataWylotu = (TextView) view.findViewById(R.id.dataWylotuValue);
             mDataPowrotu = (TextView) view.findViewById(R.id.dataPowrotuValue);
             mWylotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekWylotValue);
