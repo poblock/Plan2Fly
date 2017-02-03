@@ -1,12 +1,11 @@
 package pl.poblock.plan2fly.search;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,25 +14,22 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import pl.poblock.plan2fly.R;
-import pl.poblock.plan2fly.data.model.Miasto;
-import pl.poblock.plan2fly.data.repository.Query;
-import pl.poblock.plan2fly.data.repository.Repository;
+import pl.poblock.plan2fly.common.ActivityUtils;
 import pl.poblock.plan2fly.trips.TripsActivity;
 
-public class SearchFragment extends Fragment implements SearchContract.View {
+public class SearchFragment extends Fragment implements SearchContract.View, TextView.OnEditorActionListener, View.OnFocusChangeListener {
     private AutoCompleteTextView mSkadView;
     private AutoCompleteTextView mDokadView;
-    private EditText mMonthView;
-    private EditText mYearView;
     private SeekBar mMonthBar;
+    private TextView mDateView;
 
     private View mProgressView;
     private View mLoginFormView;
@@ -56,80 +52,69 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         mSkadView = (AutoCompleteTextView) view.findViewById(R.id.from);
         mDokadView = (AutoCompleteTextView) view.findViewById(R.id.to);
-
-        mDokadView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    if(presenter!=null) {
-                        presenter.performSearch();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mMonthView = (EditText) view.findViewById(R.id.month);
+        mDateView = (TextView) view.findViewById(R.id.monthText);
         mMonthBar = (SeekBar) view.findViewById(R.id.monthBar);
+        mLoginFormView = view.findViewById(R.id.login_form);
+        mProgressView = view.findViewById(R.id.login_progress);
+
+        Button monthNext = (Button) view.findViewById(R.id.monthNext);
+        Button monthPrev = (Button) view.findViewById(R.id.monthPrev);
+        Button mSearchButton = (Button) view.findViewById(R.id.email_sign_in_button);
+
+        mSkadView.setThreshold(3);
+        mDokadView.setThreshold(3);
+        mDokadView.setOnEditorActionListener(this);
+        mSkadView.setOnFocusChangeListener(this);
+        mDokadView.setOnFocusChangeListener(this);
+        mMonthBar.setOnFocusChangeListener(this);
         mMonthBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
                 if(presenter!=null) {
-                    presenter.changeMonth(i);
+                    presenter.changeMonthFromSeekBar(i, fromUser);
                 }
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-        mYearView = (EditText) view.findViewById(R.id.year);
-        mLoginFormView = view.findViewById(R.id.login_form);
-        mProgressView = view.findViewById(R.id.login_progress);
-        mSkadView.setThreshold(3);
-        mDokadView.setThreshold(3);
-        Button mEmailSignInButton = (Button) view.findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(presenter!=null) {
-                    presenter.performSearch();
-                }
+                performSearchUI();
             }
         });
-
+        monthNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.changeMonth(1, Integer.MIN_VALUE);
+            }
+        });
+        monthPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.changeMonth(-1, Integer.MIN_VALUE);
+            }
+        });
         return view;
+    }
+
+    private void performSearchUI() {
+        if(presenter!=null) {
+            presenter.performSearch();
+        }
+    }
+
+    @Override
+    public void showLoadingError() {
+        Snackbar.make(getView(),getString(R.string.blad),Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showProgressOnUI(final boolean show) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        ActivityUtils.showProgress(show, getContext(), mLoginFormView, mProgressView);
     }
 
     @Override
@@ -146,34 +131,48 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     @Override
-    public Query prepareQuery() {
+    public void prepareQuery(int month, int year) {
         String skad = mSkadView.getText().toString();
         String dokad = mDokadView.getText().toString();
-        int miesiac = Integer.parseInt(mMonthView.getText().toString());
-        int rok = Integer.parseInt(mYearView.getText().toString());
-        return new Query(skad, dokad, miesiac, rok);
+        if(skad!=null && dokad!=null) {
+            if(!skad.equals("") && !dokad.equals("")) {
+                Intent intent = new Intent(getContext(), TripsActivity.class);
+                intent.putExtra("skad",skad);
+                intent.putExtra("dokad",dokad);
+                intent.putExtra("miesiac",month);
+                intent.putExtra("rok",year);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
-    public void showTripList(String skad, String dokad) {
-        Intent intent = new Intent(getContext(), TripsActivity.class);
-        intent.putExtra("skad",skad);
-        intent.putExtra("dokad",dokad);
-        startActivity(intent);
+    public void monthChanged(int monthValue, int stringID, String yearTxt, int seekBarProgress) {
+        mDateView.setText(getString(stringID)+" "+yearTxt);
+        mMonthBar.setProgress(seekBarProgress);
     }
 
     @Override
-    public void monthChanged(int monthValue) {
-        mMonthView.setText(String.valueOf(monthValue));
-    }
-
-    @Override
-    public void setMiastoAdapter(List<String> collection) {
+    public void setDane(List<String> collection) {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_dropdown_item_1line, collection);
 
         mSkadView.setAdapter(adapter);
         mDokadView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (textView == mDokadView && actionId == EditorInfo.IME_ACTION_SEND) {
+            performSearchUI();
+            return true;
+        }
+        return false;
     }
 }

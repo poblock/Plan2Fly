@@ -9,7 +9,6 @@ import android.widget.TextView;
 import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.data.model.Lot;
 import pl.poblock.plan2fly.data.model.Podroz;
-import pl.poblock.plan2fly.data.repository.Repository;
 
 import java.util.List;
 
@@ -17,11 +16,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     private final List<Podroz> mValues;
     private PodrozItemListener mItemListener;
-
-    public TripAdapter(PodrozItemListener itemListener) {
-        mValues = Repository.getInstance().getCachedResults();
-        mItemListener = itemListener;
-    }
 
     public TripAdapter(List<Podroz> values, PodrozItemListener itemListener) {
         mValues = values;
@@ -44,8 +38,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.mDataWylotu.setText(tam.getDataWylotu()+" "+tam.getGodzinaWylotu());
         holder.mDataPowrotu.setText(powrot.getDataWylotu()+" "+powrot.getGodzinaWylotu());
 
-        holder.mWylotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozTam().getLoty().size()-1));
-        holder.mPowrotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozPowrot().getLoty().size()-1));
+//        holder.mWylotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozTam().getLoty().size()-1));
+//        holder.mPowrotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozPowrot().getLoty().size()-1));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +59,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         public final TextView mCena;
         public final TextView mDataWylotu;
         public final TextView mDataPowrotu;
-        public final TextView mWylotPrzesiadek;
-        public final TextView mPowrotPrzesiadek;
+//        public final TextView mWylotPrzesiadek;
+//        public final TextView mPowrotPrzesiadek;
 
         public Podroz mItem;
 
@@ -76,8 +70,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             mCena = (TextView) view.findViewById(R.id.detailCenaRazem);
             mDataWylotu = (TextView) view.findViewById(R.id.dataWylotuValue);
             mDataPowrotu = (TextView) view.findViewById(R.id.dataPowrotuValue);
-            mWylotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekWylotValue);
-            mPowrotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekPowrotValue);
+//            mWylotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekWylotValue);
+//            mPowrotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekPowrotValue);
         }
     }
 }

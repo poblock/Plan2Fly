@@ -3,16 +3,16 @@ package pl.poblock.plan2fly.search;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.data.model.Miasto;
-import pl.poblock.plan2fly.data.model.Podroz;
-import pl.poblock.plan2fly.data.repository.MiastoLoader;
-import pl.poblock.plan2fly.data.repository.Query;
-import pl.poblock.plan2fly.data.repository.Repository;
-import pl.poblock.plan2fly.data.repository.SearchLoader;
+import pl.poblock.plan2fly.data.repository.MiastoRepository;
 
 /**
  * Created by krzysztof.poblocki on 2017-01-23.
@@ -21,63 +21,45 @@ import pl.poblock.plan2fly.data.repository.SearchLoader;
 public class SearchPresenter implements SearchContract.Presenter {
 
     private final SearchContract.View mView;
-    private final SearchLoader mSearchLoader;
-    private final MiastoLoader mMiastoLoader;
     private final LoaderManager mLoaderManager;
+    private final MiastoRepository mMiastoRepository;
+    private Calendar calendar;
+    private Calendar calendarMin;
+    private Calendar calendarMax;
+    private int currSeekBarProgress;
+
+    public SearchPresenter(MiastoRepository miastoRepository, LoaderManager supportLoaderManager, SearchContract.View fragment) {
+        this.mMiastoRepository = miastoRepository;
+        this.mLoaderManager = supportLoaderManager;
+        this.mView = fragment;
+        this.mView.setPresenter(this);
+    }
 
     private LoaderManager.LoaderCallbacks<List<Miasto>> miastoCallback = new LoaderManager.LoaderCallbacks<List<Miasto>>() {
         @Override
         public Loader<List<Miasto>> onCreateLoader(int id, Bundle args) {
             showProgress(true);
-            return mMiastoLoader;
+            return mMiastoRepository;
         }
 
         @Override
         public void onLoadFinished(Loader<List<Miasto>> loader, List<Miasto> data) {
             showProgress(false);
             if(data!=null) {
-                Repository.getInstance().setCachedMiasta(data);
                 List<String> collection = new LinkedList<>();
                 for(Miasto m : data) {
                     collection.add(m.getAutoCompleteLabel());
                 }
-                mView.setMiastoAdapter(collection);
+                mView.setDane(collection);
+                prepareCalendars();
+            } else {
+                mView.showLoadingError();
             }
         }
 
         @Override
         public void onLoaderReset(Loader<List<Miasto>> loader) {}
     };
-
-    private LoaderManager.LoaderCallbacks<List<Podroz>> searchCallback = new LoaderManager.LoaderCallbacks<List<Podroz>>() {
-        @Override
-        public Loader<List<Podroz>> onCreateLoader(int id, Bundle args) {
-            showProgress(true);
-            return mSearchLoader;
-        }
-
-        @Override
-        public void onLoadFinished(Loader<List<Podroz>> loader, List<Podroz> data) {
-            showProgress(false);
-            if(data!=null) {
-                Repository.getInstance().setCachedResults(data);
-                Query q = mSearchLoader.getQuery();
-                mView.showTripList(q.getSkad(), q.getDokad());
-            }
-        }
-
-        @Override
-        public void onLoaderReset(Loader<List<Podroz>> loader) {}
-    };
-
-
-    public SearchPresenter(SearchLoader searchLoader, MiastoLoader miastoLoader, LoaderManager supportLoaderManager, SearchContract.View fragment) {
-        this.mSearchLoader = searchLoader;
-        this.mMiastoLoader = miastoLoader;
-        this.mLoaderManager = supportLoaderManager;
-        this.mView = fragment;
-        this.mView.setPresenter(this);
-    }
 
     @Override
     public void showProgress(boolean show) {
@@ -86,28 +68,73 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void performSearch() {
-        if(validate()) {
-            mLoaderManager.initLoader(1, null, searchCallback);
+        if(calendar!=null) {
+            mView.prepareQuery(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
     }
 
     @Override
-    public void start() { // TODO
+    public void start() {
         mLoaderManager.initLoader(2, null, miastoCallback);
     }
 
     @Override
-    public void changeMonth(int i) {
-        mView.monthChanged(i+1);
+    public void changeMonth(int stepMonthValue, int seekBarValue) {
+        if(calendar!=null) {
+            if (verify(stepMonthValue)) {
+                calendar.add(Calendar.MONTH, stepMonthValue);
+                SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
+                int seekBarProgress = -1;
+                if(seekBarValue!=Integer.MIN_VALUE) {
+                    seekBarProgress = seekBarValue;
+                } else {
+                    seekBarProgress = (stepMonthValue > 0 ?  currSeekBarProgress + 1 :  currSeekBarProgress - 1);
+                }
+                mView.monthChanged(stepMonthValue, getStringIDForMonth(calendar.get(Calendar.MONTH)), sdf.format(calendar.getTime()), seekBarProgress);
+            }
+        }
     }
 
-    public boolean validate() {
-        boolean result = false;
-        Query query = mView.prepareQuery();
-        if(query!=null) {
-            mSearchLoader.setQuery(query);
-            result = true;
+    @Override
+    public void changeMonthFromSeekBar(int seekBarProgress, boolean fromUser) {
+        if(fromUser) {
+            changeMonth(seekBarProgress-currSeekBarProgress, seekBarProgress);
         }
-        return result;
+        currSeekBarProgress = seekBarProgress;
+    }
+
+    private int getStringIDForMonth(int month) {
+        int text = -1;
+        switch (month) {
+            case 0 : text = R.string.january; break;
+            case 1 : text = R.string.february; break;
+            case 2 : text = R.string.march; break;
+            case 3 : text = R.string.april; break;
+            case 4 : text = R.string.may; break;
+            case 5 : text = R.string.june; break;
+            case 6 : text = R.string.july; break;
+            case 7 : text = R.string.august; break;
+            case 8 : text = R.string.september; break;
+            case 9 : text = R.string.october; break;
+            case 10 : text = R.string.november; break;
+            case 11 : text = R.string.december; break;
+        }
+        return text;
+    }
+
+    private void prepareCalendars() {
+        calendarMin = Calendar.getInstance();
+        calendar = Calendar.getInstance();
+        calendarMax = Calendar.getInstance();
+        calendarMax.add(Calendar.YEAR, 1);
+        currSeekBarProgress = 0;
+        changeMonth(0, Integer.MIN_VALUE);
+    }
+
+    private boolean verify(int month) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(calendar.getTime());
+        c.add(Calendar.MONTH, month);
+        return c.compareTo(calendarMin) >= 0 && c.compareTo(calendarMax) < 0;
     }
 }

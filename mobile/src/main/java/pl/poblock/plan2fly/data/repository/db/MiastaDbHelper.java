@@ -11,28 +11,40 @@ import android.provider.BaseColumns;
 
 public class MiastaDbHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_NAME = "task";
-    public static abstract class TaskEntry implements BaseColumns {
-        public static final String TABLE_NAME = "task";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
-        public static final String COLUMN_NAME_TITLE = "title";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
-        public static final String COLUMN_NAME_COMPLETED = "completed";
-    }
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Tasks.db";
+    public static final String DATABASE_NAME = "Miasta.db";
     private static final String TEXT_TYPE = " TEXT";
-    private static final String BOOLEAN_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
 
+    public static abstract class MiastoEntry implements BaseColumns {
+        public static final String TABLE_NAME = "miasta";
+        public static final String COLUMN_NAME_ID = "id";
+        public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_CODE = "code";
+        public static final String COLUMN_NAME_COUNTRY = "country";
+        public static final String COLUMN_NAME_LATITUDE = "latitude";
+        public static final String COLUMN_NAME_LONGITUDE = "longitude";
+    }
+
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TaskEntry.TABLE_NAME + " (" +
-                    TaskEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
-                    TaskEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
-                    TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
-                    TaskEntry.COLUMN_NAME_COMPLETED + BOOLEAN_TYPE +
+            "CREATE TABLE " + MiastoEntry.TABLE_NAME + " (" +
+                    MiastoEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
+                    MiastoEntry.COLUMN_NAME_ID + TEXT_TYPE + COMMA_SEP +
+                    MiastoEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+                    MiastoEntry.COLUMN_NAME_CODE + TEXT_TYPE + COMMA_SEP +
+                    MiastoEntry.COLUMN_NAME_COUNTRY + TEXT_TYPE + COMMA_SEP +
+                    MiastoEntry.COLUMN_NAME_LATITUDE + TEXT_TYPE + COMMA_SEP +
+                    MiastoEntry.COLUMN_NAME_LONGITUDE + TEXT_TYPE +
                     " )";
+
+    public static String[] selectAll  = {
+            MiastoEntry.COLUMN_NAME_ID,
+            MiastoEntry.COLUMN_NAME_NAME,
+            MiastoEntry.COLUMN_NAME_CODE,
+            MiastoEntry.COLUMN_NAME_COUNTRY,
+            MiastoEntry.COLUMN_NAME_LATITUDE,
+            MiastoEntry.COLUMN_NAME_LONGITUDE
+    };
 
     public MiastaDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

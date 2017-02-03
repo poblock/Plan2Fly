@@ -10,13 +10,16 @@ import pl.poblock.plan2fly.data.model.Podroz;
 
 public interface TripContract {
     interface View {
-        void showFlightsOnUI(List<Podroz> mValues);
         void showFlightDetailsUI(int podroz);
         void setPresenter(TripContract.Presenter presenter);
+        void showLoadingError();
+        void showProgressOnUI(final boolean show);
+        void showTripList(List<Podroz> data);
     }
 
     interface Presenter {
         void start();
         void openDetails(int podroz);
+        void showProgress(final boolean show);
     }
 }

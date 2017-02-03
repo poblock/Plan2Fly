@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pl.poblock.plan2fly.R;
-import pl.poblock.plan2fly.data.model.Podroz;
-import pl.poblock.plan2fly.data.repository.Repository;
 
 public class EtapFragment extends Fragment {
 
@@ -49,14 +47,14 @@ public class EtapFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            Podroz p = Repository.getInstance().getCachedResult(position);
-            if(p!=null) {
-                if(mTryb==0) {
-                    recyclerView.setAdapter(new EtapAdapter(p.getPodrozTam().getLoty()));
-                } else {
-                    recyclerView.setAdapter(new EtapAdapter(p.getPodrozPowrot().getLoty()));
-                }
-            }
+//            Podroz p = Repository.getInstance().getCachedResult(position);
+//            if(p!=null) {
+//                if(mTryb==0) {
+//                    recyclerView.setAdapter(new EtapAdapter(p.getPodrozTam().getLoty()));
+//                } else {
+//                    recyclerView.setAdapter(new EtapAdapter(p.getPodrozPowrot().getLoty()));
+//                }
+//            }
         }
         return view;
     }

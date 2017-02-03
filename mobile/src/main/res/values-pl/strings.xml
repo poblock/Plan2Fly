@@ -11,4 +11,17 @@
     <string name="fromLabel">Skąd</string>
     <string name="dataPowrotuLabel">Powrót</string>
     <string name="dataWylotuLabel">Wylot</string>
+    <string name="blad">Wystąpił błąd podczas pobierania danych</string>
+    <string name="december">Grudzień</string>
+    <string name="april">Kwiecień</string>
+    <string name="august">Sierpień</string>
+    <string name="february">Luty</string>
+    <string name="july">Lipiec</string>
+    <string name="january">Styczeń</string>
+    <string name="june">Czerwiec</string>
+    <string name="march">Marzec</string>
+    <string name="may">Maj</string>
+    <string name="november">Listopad</string>
+    <string name="october">Październik</string>
+    <string name="september">Wrzesień</string>
 </resources>

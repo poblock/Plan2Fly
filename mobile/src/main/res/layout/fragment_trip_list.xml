@@ -2,62 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/tripContainer">
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:layout_gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/c1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="Skąd"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/skadValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            />
-        <TextView
-            android:id="@+id/c3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textSize="16sp"
-            android:text="Dokąd" />
-        <TextView
-            android:id="@+id/dokadValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            />
-    </GridLayout>
-
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/flightsView"
-        android:name="pl.poblock.plan2fly.trips.TripFragment"
+    <ProgressBar
+        android:id="@+id/trips_progress"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="pl.poblock.plan2fly.trips.TripFragment"
-        tools:listitem="@layout/fragment_trip"
-        android:orientation="vertical" />
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|center_vertical" />
+
+    <LinearLayout
+        android:id="@+id/trips_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/c1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Skąd"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/skadValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/c3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textSize="16sp"
+                android:text="Dokąd" />
+            <TextView
+                android:id="@+id/dokadValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+        </GridLayout>
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/flightsView"
+            android:name="pl.poblock.plan2fly.trips.TripFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="pl.poblock.plan2fly.trips.TripFragment"
+            tools:listitem="@layout/fragment_trip"
+            android:orientation="vertical" />
+    </LinearLayout>
 </LinearLayout>
 
 

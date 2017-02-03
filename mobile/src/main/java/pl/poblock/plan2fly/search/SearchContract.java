@@ -11,18 +11,19 @@ import pl.poblock.plan2fly.data.repository.Query;
 
 public interface SearchContract {
     interface View {
+        void showLoadingError();
         void showProgressOnUI(final boolean show);
         void setPresenter(SearchContract.Presenter presenter);
-        Query prepareQuery();
-        void showTripList(String skad, String dokad);
-        void monthChanged(int monthValue);
-        void setMiastoAdapter(List<String> collection);
+        void prepareQuery(int month, int year);
+        void monthChanged(int monthValue, int stringID, String yearTxt, int seekBarProgress);
+        void setDane(List<String> collection);
     }
 
     interface Presenter {
         void showProgress(final boolean show);
         void performSearch();
         void start();
-        void changeMonth(int i);
+        void changeMonth(int i, int seekBarValue);
+        void changeMonthFromSeekBar(int i, boolean fromUser);
     }
 }

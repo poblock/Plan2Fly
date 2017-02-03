@@ -49,53 +49,65 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/toLabel"
                     android:maxLines="1"
-                    android:imeOptions="actionSend"/>
+                    android:imeOptions="actionSend"
+                    android:imeActionLabel="Szukaj" />
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
 
-                <EditText
-                    android:id="@+id/month"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/monthLabel"
-                    android:text="5"
-                    android:maxLines="1" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
+                    <Button
+                        android:text="P"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monthPrev"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monthText"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical|center_horizontal"
+                        tools:text="Październik" />
+
+                    <Button
+                        android:text="N"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monthNext"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
             </android.support.design.widget.TextInputLayout>
+
             <SeekBar
                 android:id="@+id/monthBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="11"
-                android:progress="4"
+                android:progress="0"
                 android:layout_weight="1"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="6dp"
                 android:mirrorForRtl="false" />
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/year"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/yearLabel"
-                    android:text="2017"
-                    android:maxLines="1" />
-
-            </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/searchLabel"
                 android:textStyle="bold" />
 
