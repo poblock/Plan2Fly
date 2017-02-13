@@ -8,6 +8,8 @@ import java.util.List;
 
 import pl.poblock.plan2fly.data.model.Podroz;
 import pl.poblock.plan2fly.data.repository.PodrozRepository;
+import pl.poblock.plan2fly.data.repository.loaders.PodrozLoader;
+import pl.poblock.plan2fly.data.repository.loaders.PodrozeLoader;
 
 /**
  * Created by krzysztof.poblocki on 2017-01-23.
@@ -17,27 +19,36 @@ public class TripPresenter implements TripContract.Presenter {
 
     private final TripContract.View mView;
     private final LoaderManager mLoaderManager;
-    private final PodrozRepository mPodrozRepository;
+    private final PodrozeLoader mLoader;
+    private String mSkad;
+    private String mDokad;
 
-    public TripPresenter(PodrozRepository podrozRepository, LoaderManager supportLoaderManager,TripContract.View fragment) {
-        this.mPodrozRepository = podrozRepository;
+    public TripPresenter(PodrozeLoader loader, LoaderManager supportLoaderManager, TripContract.View fragment) {
         this.mLoaderManager = supportLoaderManager;
+        this.mLoader = loader;
         mView = fragment;
         mView.setPresenter(this);
+        this.mSkad = PodrozRepository.getInstance().getQuery().getSkadFull();
+        this.mDokad = PodrozRepository.getInstance().getQuery().getDokadFull();
     }
 
     private LoaderManager.LoaderCallbacks<List<Podroz>> searchCallback = new LoaderManager.LoaderCallbacks<List<Podroz>>() {
         @Override
         public Loader<List<Podroz>> onCreateLoader(int id, Bundle args) {
             showProgress(true);
-            return mPodrozRepository;
+            return mLoader;
         }
 
         @Override
         public void onLoadFinished(Loader<List<Podroz>> loader, List<Podroz> data) {
             showProgress(false);
+            mView.showNames(mSkad, mDokad);
             if(data!=null) {
-                mView.showTripList(data);
+                if(data.isEmpty()) {
+                    mView.showEmptyResults();
+                } else {
+                    mView.showTripList(data);
+                }
             } else {
                 mView.showLoadingError();
             }

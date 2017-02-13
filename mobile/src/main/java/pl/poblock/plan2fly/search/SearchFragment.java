@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ import java.util.List;
 
 import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.common.ActivityUtils;
+import pl.poblock.plan2fly.data.repository.PodrozRepository;
+import pl.poblock.plan2fly.data.repository.Query;
 import pl.poblock.plan2fly.trips.TripsActivity;
 
 public class SearchFragment extends Fragment implements SearchContract.View, TextView.OnEditorActionListener, View.OnFocusChangeListener {
@@ -34,6 +37,7 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
     private View mProgressView;
     private View mLoginFormView;
     private SearchContract.Presenter presenter;
+    private CheckBox mWDC;
 
     public SearchFragment() {}
     public static SearchFragment newInstance() {
@@ -56,6 +60,7 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
         mMonthBar = (SeekBar) view.findViewById(R.id.monthBar);
         mLoginFormView = view.findViewById(R.id.login_form);
         mProgressView = view.findViewById(R.id.login_progress);
+        mWDC = (CheckBox) view.findViewById(R.id.wdcCheckBox);
 
         Button monthNext = (Button) view.findViewById(R.id.monthNext);
         Button monthPrev = (Button) view.findViewById(R.id.monthPrev);
@@ -136,11 +141,10 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
         String dokad = mDokadView.getText().toString();
         if(skad!=null && dokad!=null) {
             if(!skad.equals("") && !dokad.equals("")) {
+                PodrozRepository.getInstance().setQuery(new Query(skad, dokad, month, year, mWDC.isChecked()));
+
                 Intent intent = new Intent(getContext(), TripsActivity.class);
-                intent.putExtra("skad",skad);
-                intent.putExtra("dokad",dokad);
-                intent.putExtra("miesiac",month);
-                intent.putExtra("rok",year);
+                intent.putExtra("reload", 1);
                 startActivity(intent);
             }
         }

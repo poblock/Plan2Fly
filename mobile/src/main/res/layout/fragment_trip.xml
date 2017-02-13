@@ -20,19 +20,21 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_margin="20dp">
 
             <TextView
                 android:id="@+id/detailCenaRazem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 tools:text="1234.00 zł"
                 android:textSize="24sp"
                 android:layout_weight="1"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,7 +59,7 @@
                     <TextView
                         android:id="@+id/dataWylotuValue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:textStyle="normal|bold"
                         android:layout_weight="1"
@@ -83,7 +85,7 @@
                     <TextView
                         android:id="@+id/dataPowrotuValue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:textStyle="normal|bold"
                         android:layout_weight="1"

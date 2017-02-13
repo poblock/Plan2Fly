@@ -100,6 +100,43 @@ public class Lot {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Lot lot = (Lot) o;
+
+        if (skad != null ? !skad.equals(lot.skad) : lot.skad != null) return false;
+        if (dokad != null ? !dokad.equals(lot.dokad) : lot.dokad != null) return false;
+        if (linia != null ? !linia.equals(lot.linia) : lot.linia != null) return false;
+        if (dataWylotu != null ? !dataWylotu.equals(lot.dataWylotu) : lot.dataWylotu != null)
+            return false;
+        if (godzinaWylotu != null ? !godzinaWylotu.equals(lot.godzinaWylotu) : lot.godzinaWylotu != null)
+            return false;
+        if (dataPrzylotu != null ? !dataPrzylotu.equals(lot.dataPrzylotu) : lot.dataPrzylotu != null)
+            return false;
+        if (godzinaPrzylotu != null ? !godzinaPrzylotu.equals(lot.godzinaPrzylotu) : lot.godzinaPrzylotu != null)
+            return false;
+        if (czasLotu != null ? !czasLotu.equals(lot.czasLotu) : lot.czasLotu != null) return false;
+        return cena != null ? cena.equals(lot.cena) : lot.cena == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = skad != null ? skad.hashCode() : 0;
+        result = 31 * result + (dokad != null ? dokad.hashCode() : 0);
+        result = 31 * result + (linia != null ? linia.hashCode() : 0);
+        result = 31 * result + (dataWylotu != null ? dataWylotu.hashCode() : 0);
+        result = 31 * result + (godzinaWylotu != null ? godzinaWylotu.hashCode() : 0);
+        result = 31 * result + (dataPrzylotu != null ? dataPrzylotu.hashCode() : 0);
+        result = 31 * result + (godzinaPrzylotu != null ? godzinaPrzylotu.hashCode() : 0);
+        result = 31 * result + (czasLotu != null ? czasLotu.hashCode() : 0);
+        result = 31 * result + (cena != null ? cena.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Lot{" +
                 "skad='" + skad + '\'' +

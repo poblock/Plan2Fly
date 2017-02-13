@@ -7,9 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import pl.poblock.plan2fly.R;
@@ -21,20 +24,14 @@ import java.util.List;
 
 public class TripFragment extends Fragment implements TripContract.View {
 
-    private static final String ARGUMENT_SKAD = "skad";
-    private static final String ARGUMENT_DOKAD = "dokad";
-    private static final String ARGUMENT_MIESIAC = "miesiac";
-    private static final String ARGUMENT_ROK = "rok";
-
     private TripContract.Presenter mPresenter;
-    private String skad;
-    private String dokad;
-    private int miesiac;
-    private int rok;
-
     private RecyclerView recyclerView;
     private View mProgressView;
     private View mFormView;
+    private TextView skadTextView;
+    private TextView dokadTextView;
+    private RelativeLayout noInfo;
+    private FrameLayout mProgressLayout;
 
     private PodrozItemListener listener = new PodrozItemListener() {
         @Override
@@ -43,28 +40,12 @@ public class TripFragment extends Fragment implements TripContract.View {
         }
     };
 
+
     public TripFragment() {}
 
-    public static TripFragment newInstance(String skad, String dokad, int miesiac, int rok) {
-        Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_SKAD, skad);
-        arguments.putString(ARGUMENT_DOKAD, dokad);
-        arguments.putInt(ARGUMENT_MIESIAC, miesiac);
-        arguments.putInt(ARGUMENT_ROK, rok);
+    public static TripFragment newInstance() {
         TripFragment fragment = new TripFragment();
-        fragment.setArguments(arguments);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            skad = getArguments().getString(ARGUMENT_SKAD);
-            dokad = getArguments().getString(ARGUMENT_DOKAD);
-            miesiac = getArguments().getInt(ARGUMENT_MIESIAC);
-            rok = getArguments().getInt(ARGUMENT_ROK);
-        }
     }
 
     @Override
@@ -75,16 +56,15 @@ public class TripFragment extends Fragment implements TripContract.View {
         recyclerView = (RecyclerView) view.findViewById(R.id.flightsView);
         if(recyclerView!=null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //TripAdapter adapter = new TripAdapter(listener);
-            //recyclerView.setAdapter(adapter);
         }
+        noInfo = (RelativeLayout) view.findViewById(R.id.noInfoLayout);
+
         mFormView = view.findViewById(R.id.trips_form);
         mProgressView = view.findViewById(R.id.trips_progress);
+        mProgressLayout = (FrameLayout) view.findViewById(R.id.progressLayout);
+        skadTextView = (TextView) view.findViewById(R.id.skadValue);
+        dokadTextView = (TextView) view.findViewById(R.id.dokadValue);
 
-        TextView skadTextView = (TextView) view.findViewById(R.id.skadValue);
-        TextView dokadTextView = (TextView) view.findViewById(R.id.dokadValue);
-        skadTextView.setText(skad.substring(0, skad.length()-3));
-        dokadTextView.setText(dokad.substring(0, dokad.length()-3));
         return view;
     }
 
@@ -118,15 +98,37 @@ public class TripFragment extends Fragment implements TripContract.View {
 
     @Override
     public void showProgressOnUI(boolean show) {
+        mProgressLayout.setVisibility(show ? View.VISIBLE : View.GONE);
         ActivityUtils.showProgress(show, getContext(), mFormView, mProgressView);
     }
 
     @Override
     public void showTripList(List<Podroz> data) {
+        Log.i("Trip", "Show list : "+data);
         TripAdapter adapter = new TripAdapter(data, listener);
         if(recyclerView!=null) {
             recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
         }
+        if(noInfo!=null) {
+            noInfo.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showEmptyResults() {
+        if(recyclerView!=null) {
+            recyclerView.setVisibility(View.GONE);
+        }
+        if(noInfo!=null) {
+            noInfo.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showNames(String skad, String dokad) {
+        skadTextView.setText(skad);
+        dokadTextView.setText(dokad);
     }
 
     @Override

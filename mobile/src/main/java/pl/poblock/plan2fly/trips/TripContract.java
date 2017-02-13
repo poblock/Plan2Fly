@@ -15,6 +15,8 @@ public interface TripContract {
         void showLoadingError();
         void showProgressOnUI(final boolean show);
         void showTripList(List<Podroz> data);
+        void showEmptyResults();
+        void showNames(String skad, String dokad);
     }
 
     interface Presenter {

@@ -1,0 +1,43 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="120dp"
+    android:width="100dp"
+    android:viewportWidth="100.0"
+    android:viewportHeight="120.0">
+    <group
+        android:name="rotationGroup"
+        android:pivotX="0.0"
+        android:pivotY="0.0"
+        android:rotation="0.0" >
+        <path
+            android:name="kolo"
+            android:fillColor="#2a4678"
+            android:fillAlpha=".7"
+            android:pathData="M44,6a6,6 0 1,0 12,0a6,6 0 1,0 -12,0z"
+            />
+        <path
+            android:name="kolob"
+            android:fillAlpha=".4"
+            android:fillColor="#2a4678"
+            android:pathData="M45,6a5,5 0 1,0 10,0a5,5 0 1,0 -10,0z"
+            />
+
+        <path
+            android:fillColor="#2a4678"
+            android:fillAlpha=".7"
+            android:pathData="M49,14 L51,14 L51,106 L49,106z"
+            />
+
+        <path
+            android:name="kolo"
+            android:fillColor="#2a4678"
+            android:fillAlpha=".7"
+            android:pathData="M44,114a6,6 0 1,0 12,0a6,6 0 1,0 -12,0z"
+            />
+        <path
+            android:name="kolob"
+            android:fillAlpha=".4"
+            android:fillColor="#2a4678"
+            android:pathData="M45,114a5,5 0 1,0 10,0a5,5 0 1,0 -10,0z"
+            />
+    </group>
+</vector>

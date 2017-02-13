@@ -11,8 +11,8 @@ import pl.poblock.plan2fly.data.model.Podroz;
 public interface DetailContract {
     interface View {
         void setPresenter(DetailContract.Presenter presenter);
+        void showTrip(int selectedPosition, Podroz data);
         void showLoadingError();
-        void showProgressOnUI(final boolean show);
     }
 
     interface Presenter {

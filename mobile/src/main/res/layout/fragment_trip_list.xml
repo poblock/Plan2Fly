@@ -6,14 +6,21 @@
     android:orientation="vertical"
     android:id="@+id/tripContainer">
 
-    <ProgressBar
-        android:id="@+id/trips_progress"
-        style="?android:attr/progressBarStyleLarge"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:id="@+id/progressLayout"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/trips_progress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|center_vertical" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/trips_form"
@@ -26,38 +33,44 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin"
             android:layout_marginRight="@dimen/margin"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:columnCount="3"
+            android:columnOrderPreserved="true"
+            android:rowCount="1"
+            android:background="#119999FF">
 
-            <TextView
-                android:id="@+id/c1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:text="Skąd"
-                android:textSize="16sp" />
             <TextView
                 android:id="@+id/skadValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:id="@+id/c3"
+                android:textSize="18sp"
+                android:text="Gdańsk"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:textSize="16sp"
-                android:text="Dokąd" />
+                app:srcCompat="@drawable/plane"
+                android:id="@+id/imageView2"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp" />
+
             <TextView
                 android:id="@+id/dokadValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                />
+                android:textSize="18sp"
+                android:text="Malaga"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical" />
+
         </GridLayout>
 
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,6 +87,28 @@
             tools:listitem="@layout/fragment_trip"
             android:orientation="vertical" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:id="@+id/noInfoLayout"
+        android:visibility="gone">
+
+        <TextView
+            android:text="@string/noresults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/noresultsInfo"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_toRightOf="@+id/imageView"
+            android:textColor="#44000000" />
+    </RelativeLayout>
+
 </LinearLayout>
 
 

@@ -13,16 +13,16 @@ import pl.poblock.plan2fly.data.repository.service.Service;
  * Created by krzysztof.poblocki on 2017-02-01.
  */
 
-public class PodrozRepository extends AsyncTaskLoader<List<Podroz>> {
+public class PodrozRepository {
 
     private static PodrozRepository INSTANCE;
     private Query query;
     private List<Podroz> cachedPodroze;
     private boolean checkCache;
 
-    public static PodrozRepository getInstance(Context context) {
+    public static PodrozRepository getInstance() {
         if(INSTANCE==null) {
-            INSTANCE = new PodrozRepository(context);
+            INSTANCE = new PodrozRepository();
         }
         return INSTANCE;
     }
@@ -35,11 +35,14 @@ public class PodrozRepository extends AsyncTaskLoader<List<Podroz>> {
 //        onContentChanged();
 //    }
 
+    public PodrozRepository() {
+        this.checkCache = true;
+    }
+
     public PodrozRepository(Context context) {
-        super(context);
+//        super(context);
         this.checkCache = true;
         // ...
-        onContentChanged();
     }
 
     public void setQuery(Query query) {
@@ -50,26 +53,14 @@ public class PodrozRepository extends AsyncTaskLoader<List<Podroz>> {
         return query;
     }
 
-    @Override
-    public List<Podroz> loadInBackground() {
-        return pobierzPodroze();
-    }
-
-    @Override
-    protected void onStartLoading() {
-        if (takeContentChanged())
-            forceLoad();
-    }
-
-    @Override
-    protected void onStopLoading() {
-        cancelLoad();
-    }
-
     public List<Podroz> pobierzPodroze() {
+        return pobierzPodroze(false);
+    }
+
+    public List<Podroz> pobierzPodroze(boolean forceReload) {
         List<Podroz> results = null;
         if(query!=null) {
-            if(checkCache) {
+            if(checkCache && !forceReload) {
                 if(cachedPodroze!=null) {
                     return cachedPodroze;
                 } else {
@@ -78,23 +69,27 @@ public class PodrozRepository extends AsyncTaskLoader<List<Podroz>> {
             }
 
             if(results == null || results.isEmpty()) {
-                results = Service.getInstance().pobierzPodroze(query.getSkad(), query.getDokad(), query.getMiesiac(), query.getRok());
+                results = Service.getInstance().pobierzPodroze(query.getSkad(), query.getDokad(), query.getMiesiac(), query.getRok(), query.czyWDC());
 //                saveLocalDataSourceMiasta(results);
             }
-            processResults(results);
+            processResults(results, query);
         }
         return results;
     }
 
     public Podroz getPodroz(int position) {
-        List<Podroz> results = pobierzPodroze();
-        if(results!=null) {
-            return results.get(position);
+        if(position!=999) {
+            List<Podroz> results = pobierzPodroze();
+            if(results!=null) {
+                return results.get(position);
+            }
+        } else {
+            return Ulubione.preparePodroz();
         }
         return null;
     }
 
-    private void processResults(List<Podroz> podroze) {
+    private void processResults(List<Podroz> podroze, Query query) {
         if (podroze == null) {
             cachedPodroze = null;
             checkCache = true;

@@ -83,7 +83,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         if(calendar!=null) {
             if (verify(stepMonthValue)) {
                 calendar.add(Calendar.MONTH, stepMonthValue);
-                SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
                 int seekBarProgress = -1;
                 if(seekBarValue!=Integer.MIN_VALUE) {
                     seekBarProgress = seekBarValue;
