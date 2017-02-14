@@ -51,7 +51,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showTrip(int selectedPosition, Podroz podroz) {
-        mViewCenaRazem.setText(String.valueOf(podroz.getCenaRazem())+" zł");
+        mViewCenaRazem.setText("Razem "+String.valueOf(podroz.getCenaRazem())+" zł");
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager(), selectedPosition);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }

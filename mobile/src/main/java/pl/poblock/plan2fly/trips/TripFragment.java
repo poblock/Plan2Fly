@@ -104,7 +104,6 @@ public class TripFragment extends Fragment implements TripContract.View {
 
     @Override
     public void showTripList(List<Podroz> data) {
-        Log.i("Trip", "Show list : "+data);
         TripAdapter adapter = new TripAdapter(data, listener);
         if(recyclerView!=null) {
             recyclerView.setAdapter(adapter);

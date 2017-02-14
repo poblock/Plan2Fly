@@ -6,33 +6,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="pl.poblock.plan2fly.tripdetail.EtapFragment"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".etap.EtapFragment"
-        tools:listitem="@layout/fragment_etap"
-        android:layout_marginTop="30dp">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etapCena"
-        android:layout_margin="8dp" />
+        <TextView
+            android:text="1234"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/etapCena"
+            android:layout_margin="8dp"
+            android:textStyle="normal|bold"
+            android:layout_weight="4" />
 
-    <CheckBox
-        android:text="Dodaj do planu podróży"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
-        android:layout_gravity="end"
-        android:layout_margin="4dp"
-        android:button="@drawable/checkbox_add" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="pl.poblock.plan2fly.tripdetail.EtapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".etap.EtapFragment"
+            tools:listitem="@layout/fragment_etap"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1">
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@color/colorPrimary">
+
+            <CheckBox
+                android:text="Dodaj do planu podróży"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox"
+                android:layout_margin="4dp"
+                android:button="@drawable/checkbox_add"
+                android:textColor="#FFFFFF"
+                android:textStyle="normal|bold"
+                android:layout_gravity="center_vertical|end"
+                android:gravity="center_vertical|end" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>
 

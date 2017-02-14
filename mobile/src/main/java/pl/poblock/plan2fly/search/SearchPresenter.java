@@ -13,6 +13,7 @@ import java.util.List;
 import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.data.model.Miasto;
 import pl.poblock.plan2fly.data.repository.MiastoRepository;
+import pl.poblock.plan2fly.data.repository.loaders.MiastoLoader;
 
 /**
  * Created by krzysztof.poblocki on 2017-01-23.
@@ -22,24 +23,24 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     private final SearchContract.View mView;
     private final LoaderManager mLoaderManager;
-    private final MiastoRepository mMiastoRepository;
+    private final MiastoLoader mMiastoLoader;
     private Calendar calendar;
     private Calendar calendarMin;
     private Calendar calendarMax;
     private int currSeekBarProgress;
 
-    public SearchPresenter(MiastoRepository miastoRepository, LoaderManager supportLoaderManager, SearchContract.View fragment) {
-        this.mMiastoRepository = miastoRepository;
+    public SearchPresenter(MiastoLoader loader, LoaderManager supportLoaderManager, SearchContract.View fragment) {
         this.mLoaderManager = supportLoaderManager;
         this.mView = fragment;
         this.mView.setPresenter(this);
+        this.mMiastoLoader = loader;
     }
 
     private LoaderManager.LoaderCallbacks<List<Miasto>> miastoCallback = new LoaderManager.LoaderCallbacks<List<Miasto>>() {
         @Override
         public Loader<List<Miasto>> onCreateLoader(int id, Bundle args) {
             showProgress(true);
-            return mMiastoRepository;
+            return mMiastoLoader;
         }
 
         @Override

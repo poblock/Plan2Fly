@@ -32,7 +32,9 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
     private AutoCompleteTextView mSkadView;
     private AutoCompleteTextView mDokadView;
     private SeekBar mMonthBar;
+    private SeekBar mOfertBar;
     private TextView mDateView;
+    private TextView mOfertView;
 
     private View mProgressView;
     private View mLoginFormView;
@@ -58,12 +60,16 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
         mDokadView = (AutoCompleteTextView) view.findViewById(R.id.to);
         mDateView = (TextView) view.findViewById(R.id.monthText);
         mMonthBar = (SeekBar) view.findViewById(R.id.monthBar);
+        mOfertView = (TextView) view.findViewById(R.id.ofertText);
+        mOfertBar = (SeekBar) view.findViewById(R.id.ofertBar);
         mLoginFormView = view.findViewById(R.id.login_form);
         mProgressView = view.findViewById(R.id.login_progress);
         mWDC = (CheckBox) view.findViewById(R.id.wdcCheckBox);
 
         Button monthNext = (Button) view.findViewById(R.id.monthNext);
         Button monthPrev = (Button) view.findViewById(R.id.monthPrev);
+        Button ofertNext = (Button) view.findViewById(R.id.ofertNext);
+        Button ofertPrev = (Button) view.findViewById(R.id.ofertPrev);
         Button mSearchButton = (Button) view.findViewById(R.id.email_sign_in_button);
 
         mSkadView.setThreshold(3);
@@ -141,7 +147,9 @@ public class SearchFragment extends Fragment implements SearchContract.View, Tex
         String dokad = mDokadView.getText().toString();
         if(skad!=null && dokad!=null) {
             if(!skad.equals("") && !dokad.equals("")) {
-                PodrozRepository.getInstance().setQuery(new Query(skad, dokad, month, year, mWDC.isChecked()));
+                String strOfert = mOfertView.getText().toString();
+                int iloscOfert = Integer.parseInt(strOfert);
+                PodrozRepository.getInstance(getContext()).setQuery(new Query(skad, dokad, month, year, mWDC.isChecked(), iloscOfert));
 
                 Intent intent = new Intent(getContext(), TripsActivity.class);
                 intent.putExtra("reload", 1);

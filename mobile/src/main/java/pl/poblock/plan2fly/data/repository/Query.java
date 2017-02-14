@@ -12,8 +12,9 @@ public class Query {
     private int miesiac;
     private int rok;
     private boolean czyWDC;
+    private int ofert;
 
-    public Query(String skad, String dokad, int miesiac, int rok, boolean czyWDC) {
+    public Query(String skad, String dokad, int miesiac, int rok, boolean czyWDC, int iloscOfert) {
         this.skad = skad.substring(skad.length()-3);
         this.dokad = dokad.substring(dokad.length()-3);
         this.skadFull = skad.substring(0, skad.length()-3);
@@ -21,6 +22,7 @@ public class Query {
         this.miesiac = miesiac;
         this.rok = rok;
         this.czyWDC = czyWDC;
+        this.ofert = iloscOfert;
     }
 
     public String getSkad() {
@@ -57,5 +59,13 @@ public class Query {
 
     public int czyWDC() {
         return czyWDC ? 1 : 0;
+    }
+
+    public int getOfert() {
+        return ofert;
+    }
+
+    public void setOfert(int ofert) {
+        this.ofert = ofert;
     }
 }

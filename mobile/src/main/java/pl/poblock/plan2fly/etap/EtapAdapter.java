@@ -31,8 +31,8 @@ public class EtapAdapter extends RecyclerView.Adapter<EtapAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = loty.get(position);
         Lot lot = loty.get(position);
-        holder.mSkad.setText(lot.getSkad());
-        holder.mDokad.setText(lot.getDokad());
+        holder.mSkad.setText(lot.getSkadFull());
+        holder.mDokad.setText(lot.getDokadFull());
         holder.mContentView.setText(lot.getDataWylotu()+" "+lot.getGodzinaWylotu());
         holder.mPrzylot.setText(lot.getDataPrzylotu()+" "+lot.getGodzinaPrzylotu());
         holder.mCena.setText(lot.getCena()+" zł");

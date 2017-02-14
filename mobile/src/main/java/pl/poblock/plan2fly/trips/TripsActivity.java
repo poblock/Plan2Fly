@@ -32,7 +32,7 @@ public class TripsActivity extends AppCompatActivity {
 
         int reload = getIntent().getIntExtra("reload", 0);
         PodrozeLoader loader = new PodrozeLoader(reload == 1, getApplicationContext());
-        TripPresenter mPresenter = new TripPresenter(loader, getSupportLoaderManager(), fragment);
+        TripPresenter mPresenter = new TripPresenter(getApplicationContext(), loader, getSupportLoaderManager(), fragment);
     }
 
     @Override

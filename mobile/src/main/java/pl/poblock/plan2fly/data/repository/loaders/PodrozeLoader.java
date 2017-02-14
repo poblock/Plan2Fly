@@ -14,16 +14,18 @@ import pl.poblock.plan2fly.data.repository.PodrozRepository;
 
 public class PodrozeLoader extends AsyncTaskLoader<List<Podroz>> {
     private boolean mForce;
+    private Context context;
 
     public PodrozeLoader(boolean force, Context context) {
         super(context);
         this.mForce = force;
+        this.context = context;
         onContentChanged();
     }
 
     @Override
     public List<Podroz> loadInBackground() {
-        return PodrozRepository.getInstance().pobierzPodroze(mForce);
+        return PodrozRepository.getInstance(context).pobierzPodroze(mForce);
     }
 
     @Override

@@ -17,33 +17,23 @@ import pl.poblock.plan2fly.data.repository.service.Service;
  * Created by krzysztof.poblocki on 2017-01-31.
  */
 
-public class MiastoRepository extends AsyncTaskLoader<List<Miasto>> {
+public class MiastoRepository {
 
     private MiastaLocalSource localService;
     private List<Miasto> cachedMiasta;
     private boolean checkCache;
+    private static MiastoRepository INSTANCE;
+
+    public static MiastoRepository getInstance(Context context) {
+        if(INSTANCE == null) {
+            INSTANCE = new MiastoRepository(context);
+        }
+        return INSTANCE;
+    }
 
     public MiastoRepository(Context context) {
-        super(context);
         this.checkCache = true;
         this.localService = MiastaLocalSource.getInstance(context);
-        onContentChanged();
-    }
-
-    @Override
-    public List<Miasto> loadInBackground() {
-        return pobierzMiasta();
-    }
-
-    @Override
-    protected void onStartLoading() {
-        if (takeContentChanged())
-            forceLoad();
-    }
-
-    @Override
-    protected void onStopLoading() {
-        cancelLoad();
     }
 
     public List<Miasto> pobierzMiasta() {

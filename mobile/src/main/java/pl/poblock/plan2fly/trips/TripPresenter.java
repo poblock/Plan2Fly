@@ -1,5 +1,6 @@
 package pl.poblock.plan2fly.trips;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -23,13 +24,13 @@ public class TripPresenter implements TripContract.Presenter {
     private String mSkad;
     private String mDokad;
 
-    public TripPresenter(PodrozeLoader loader, LoaderManager supportLoaderManager, TripContract.View fragment) {
+    public TripPresenter(Context context, PodrozeLoader loader, LoaderManager supportLoaderManager, TripContract.View fragment) {
         this.mLoaderManager = supportLoaderManager;
         this.mLoader = loader;
         mView = fragment;
         mView.setPresenter(this);
-        this.mSkad = PodrozRepository.getInstance().getQuery().getSkadFull();
-        this.mDokad = PodrozRepository.getInstance().getQuery().getDokadFull();
+        this.mSkad = PodrozRepository.getInstance(context).getQuery().getSkadFull();
+        this.mDokad = PodrozRepository.getInstance(context).getQuery().getDokadFull();
     }
 
     private LoaderManager.LoaderCallbacks<List<Podroz>> searchCallback = new LoaderManager.LoaderCallbacks<List<Podroz>>() {

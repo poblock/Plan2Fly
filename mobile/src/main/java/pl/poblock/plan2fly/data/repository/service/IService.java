@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 
 public interface IService {
     @GET("api/v1/podroz/znajdz")
-    Call<List<Podroz>> podroze(@Query("skad") String skad, @Query("dokad") String dokad, @Query("miesiac") int miesiac, @Query("rok") int rok, @Query("wdc") int czyWDC);
+    Call<List<Podroz>> podroze(@Query("skad") String skad, @Query("dokad") String dokad, @Query("miesiac") int miesiac, @Query("rok") int rok, @Query("wdc") int czyWDC, @Query("top") int ofert);
     @GET("api/v1/polaczenia/miasta")
     Call<List<Miasto>> miasta();
     @GET("api/v1/polaczenia")

@@ -57,7 +57,7 @@ public class EtapFragment extends Fragment implements EtapContract.View {
         Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        Podroz p = PodrozRepository.getInstance().getPodroz(position);
+        Podroz p = PodrozRepository.getInstance(getContext()).getPodroz(position);
         if(p!=null) {
             List<Lot> loty = null;
             if(mTryb==0) {
@@ -79,10 +79,12 @@ public class EtapFragment extends Fragment implements EtapContract.View {
                     }
                 });
 
-                cenaEtap.setText(String.valueOf(MathUtils.makeDouble(cena)));
+                cenaEtap.setText("Etap: "+String.valueOf(MathUtils.makeDouble(cena))+" zł");
             }
         }
-
+        if(position == 999) {
+            check.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 

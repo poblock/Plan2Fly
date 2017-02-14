@@ -33,14 +33,21 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        holder.mCena.setText(String.valueOf(mValues.get(position).getCenaRazem())+" zł");
-        Lot tam = mValues.get(position).getPodrozTam().getLoty().get(0);
-        Lot powrot = mValues.get(position).getPodrozPowrot().getLoty().get(0);
-        holder.mDataWylotu.setText(tam.getDataWylotu()+" "+tam.getGodzinaWylotu());
-        holder.mDataPowrotu.setText(powrot.getDataWylotu()+" "+powrot.getGodzinaWylotu());
+        holder.mCena.setText(String.valueOf(holder.mItem.getCenaRazem())+" zł");
+        Lot tam = holder.mItem.getPodrozTam().getLoty().get(0);
+        Lot powrot = holder.mItem.getPodrozPowrot().getLoty().get(0);
+        holder.mDataWylotu.setText(tam.getDataWylotu());
+        holder.mDataPowrotu.setText(powrot.getDataWylotu());
 
-//        holder.mWylotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozTam().getLoty().size()-1));
-//        holder.mPowrotPrzesiadek.setText(String.valueOf(mValues.get(position).getPodrozPowrot().getLoty().size()-1));
+        holder.mWylotCena.setText(String.valueOf(holder.mItem.getPodrozTam().getSuma())+" zł");
+        holder.mPowrotCena.setText(String.valueOf(holder.mItem.getPodrozPowrot().getSuma())+" zł");
+
+        if(holder.mItem.isNajtanszyWylot()) {
+            holder.mWylotCena.setTextColor(Color.parseColor("#77EE77"));
+        }
+        if(holder.mItem.isNajtanszyPowrot()) {
+            holder.mPowrotCena.setTextColor(Color.parseColor("#77EE77"));
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +105,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         public final TextView mCena;
         public final TextView mDataWylotu;
         public final TextView mDataPowrotu;
-//        public final TextView mWylotPrzesiadek;
-//        public final TextView mPowrotPrzesiadek;
+        public final TextView mWylotCena;
+        public final TextView mPowrotCena;
 
         public Podroz mItem;
 
@@ -109,8 +116,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             mCena = (TextView) view.findViewById(R.id.detailCenaRazem);
             mDataWylotu = (TextView) view.findViewById(R.id.dataWylotuValue);
             mDataPowrotu = (TextView) view.findViewById(R.id.dataPowrotuValue);
-//            mWylotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekWylotValue);
-//            mPowrotPrzesiadek = (TextView) view.findViewById(R.id.przesiadekPowrotValue);
+            mWylotCena = (TextView) view.findViewById(R.id.wylotCena);
+            mPowrotCena = (TextView) view.findViewById(R.id.powrotCena);
         }
     }
 }

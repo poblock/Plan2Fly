@@ -7,6 +7,7 @@ import android.os.Bundle;
 import pl.poblock.plan2fly.R;
 import pl.poblock.plan2fly.common.ActivityUtils;
 import pl.poblock.plan2fly.data.repository.MiastoRepository;
+import pl.poblock.plan2fly.data.repository.loaders.MiastoLoader;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -19,8 +20,8 @@ public class SearchActivity extends AppCompatActivity {
             fragment = SearchFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
-        MiastoRepository miastoRepository = new MiastoRepository(getApplicationContext());
-        SearchPresenter mPresenter = new SearchPresenter(miastoRepository, getSupportLoaderManager(), fragment);
+        MiastoLoader loader = new MiastoLoader(getApplicationContext());
+        SearchPresenter mPresenter = new SearchPresenter(loader, getSupportLoaderManager(), fragment);
     }
 }
 

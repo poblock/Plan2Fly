@@ -14,6 +14,8 @@ public class Lot {
     private String godzinaPrzylotu;
     private String czasLotu;
     private String cena;
+    private String skadFull;
+    private String dokadFull;
 
     public Lot(String skad, String dokad, String linia, String dataWylotu, String godzinaWylotu, String dataPrzylotu, String godzinaPrzylotu, String czasLotu, String cena) {
         this.skad = skad;
@@ -99,6 +101,22 @@ public class Lot {
         this.cena = cena;
     }
 
+    public String getDokadFull() {
+        return dokadFull;
+    }
+
+    public void setDokadFull(String dokadFull) {
+        this.dokadFull = dokadFull;
+    }
+
+    public String getSkadFull() {
+        return skadFull;
+    }
+
+    public void setSkadFull(String skadFull) {
+        this.skadFull = skadFull;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -136,10 +154,12 @@ public class Lot {
         return result;
     }
 
+
     @Override
     public String toString() {
         return "Lot{" +
-                "skad='" + skad + '\'' +
+                "cena='" + cena + '\'' +
+                ", skad='" + skad + '\'' +
                 ", dokad='" + dokad + '\'' +
                 ", linia='" + linia + '\'' +
                 ", dataWylotu='" + dataWylotu + '\'' +
@@ -147,7 +167,8 @@ public class Lot {
                 ", dataPrzylotu='" + dataPrzylotu + '\'' +
                 ", godzinaPrzylotu='" + godzinaPrzylotu + '\'' +
                 ", czasLotu='" + czasLotu + '\'' +
-                ", cena='" + cena + '\'' +
+                ", skadFull='" + skadFull + '\'' +
+                ", dokadFull='" + dokadFull + '\'' +
                 '}';
     }
 }

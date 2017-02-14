@@ -5,28 +5,25 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import java.util.List;
 
-import pl.poblock.plan2fly.data.model.Podroz;
-import pl.poblock.plan2fly.data.repository.PodrozRepository;
+import pl.poblock.plan2fly.data.model.Miasto;
+import pl.poblock.plan2fly.data.repository.MiastoRepository;
 
 /**
- * Created by krzysztof.poblocki on 2017-02-07.
+ * Created by krzysztof.poblocki on 2017-02-14.
  */
 
-public class PodrozLoader extends AsyncTaskLoader<Podroz> {
-
-    private int mPosition;
+public class MiastoLoader extends AsyncTaskLoader<List<Miasto>> {
     private Context context;
 
-    public PodrozLoader(Context context, int position) {
+    public MiastoLoader(Context context) {
         super(context);
         this.context = context;
-        mPosition = position;
         onContentChanged();
     }
 
     @Override
-    public Podroz loadInBackground() {
-        return PodrozRepository.getInstance(context).getPodroz(mPosition);
+    public List<Miasto> loadInBackground() {
+        return MiastoRepository.getInstance(context).pobierzMiasta();
     }
 
     @Override

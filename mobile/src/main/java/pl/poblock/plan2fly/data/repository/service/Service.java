@@ -48,8 +48,8 @@ public class Service {
         service = retrofit.create(IService.class);
     }
 
-    public List<Podroz> pobierzPodroze(String skad, String dokad, int miesiac, int rok, int czyWDC) {
-        Call<List<Podroz>> call = service.podroze(skad, dokad, miesiac, rok, czyWDC);
+    public List<Podroz> pobierzPodroze(String skad, String dokad, int miesiac, int rok, int czyWDC, int ofert) {
+        Call<List<Podroz>> call = service.podroze(skad, dokad, miesiac, rok, czyWDC, ofert);
         try {
             Response<List<Podroz>> response = call.execute();
             if(response.isSuccessful()) {

@@ -51,20 +51,42 @@
                     <TextView
                         android:id="@+id/dataWylotuLabel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="2dp"
                         android:text="@string/dataWylotuLabel"
-                        android:layout_weight="2" />
+                        android:layout_weight="2"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical|center_horizontal" />
 
-                    <TextView
-                        android:id="@+id/dataWylotuValue"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:textStyle="normal|bold"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="2015-03-23 13:33" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/dataWylotuValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:textStyle="normal|bold"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="2015-03-23"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical" />
+
+                        <TextView
+                            android:text="12345zł"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/wylotCena"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="2dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -77,20 +99,41 @@
                     <TextView
                         android:id="@+id/dataPowrotuLabel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="2dp"
                         android:layout_weight="2"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical|center_horizontal"
                         android:text="@string/dataPowrotuLabel" />
 
-                    <TextView
-                        android:id="@+id/dataPowrotuValue"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:textStyle="normal|bold"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="2015-03-23 15:51" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/dataPowrotuValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:textStyle="normal|bold"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="2015-03-23"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"/>
+                        <TextView
+                            android:text="12345zł"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/powrotCena"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="2dp" />
+
+                    </LinearLayout>
+
 
 
                 </LinearLayout>

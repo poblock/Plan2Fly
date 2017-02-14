@@ -2,10 +2,13 @@ package pl.poblock.plan2fly.data.repository;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import pl.poblock.plan2fly.data.model.Lot;
+import pl.poblock.plan2fly.data.model.Miasto;
 import pl.poblock.plan2fly.data.model.Podroz;
 import pl.poblock.plan2fly.data.repository.service.Service;
 
@@ -19,28 +22,21 @@ public class PodrozRepository {
     private Query query;
     private List<Podroz> cachedPodroze;
     private boolean checkCache;
+    private Context context;
 
-    public static PodrozRepository getInstance() {
+    public static PodrozRepository getInstance(Context context) {
         if(INSTANCE==null) {
-            INSTANCE = new PodrozRepository();
+            INSTANCE = new PodrozRepository(context);
         }
         return INSTANCE;
     }
-
-//    public PodrozRepository(Context context, Query query) {
-//        super(context);
-//        this.checkCache = true;
-//        // ...
-//        setQuery(query);
-//        onContentChanged();
-//    }
 
     public PodrozRepository() {
         this.checkCache = true;
     }
 
     public PodrozRepository(Context context) {
-//        super(context);
+        this.context = context;
         this.checkCache = true;
         // ...
     }
@@ -69,10 +65,10 @@ public class PodrozRepository {
             }
 
             if(results == null || results.isEmpty()) {
-                results = Service.getInstance().pobierzPodroze(query.getSkad(), query.getDokad(), query.getMiesiac(), query.getRok(), query.czyWDC());
+                results = Service.getInstance().pobierzPodroze(query.getSkad(), query.getDokad(), query.getMiesiac(), query.getRok(), query.czyWDC(), query.getOfert());
 //                saveLocalDataSourceMiasta(results);
             }
-            processResults(results, query);
+            processResults(results);
         }
         return results;
     }
@@ -89,7 +85,7 @@ public class PodrozRepository {
         return null;
     }
 
-    private void processResults(List<Podroz> podroze, Query query) {
+    private void processResults(List<Podroz> podroze) {
         if (podroze == null) {
             cachedPodroze = null;
             checkCache = true;
@@ -99,9 +95,55 @@ public class PodrozRepository {
             cachedPodroze = new LinkedList<>();
         }
         cachedPodroze.clear();
-        for (Podroz p : podroze) {
+
+        Double minCenaWylot = Double.MAX_VALUE;
+        int wylotIdx = -1;
+        Double minCenaPowrot = Double.MAX_VALUE;
+        int powrotIdx = -1;
+        for (int i=0; i<podroze.size(); i++) {
+            Podroz p = podroze.get(i);
+            writeCityName(p.getPodrozTam().getLoty());
+            writeCityName(p.getPodrozPowrot().getLoty());
+            if(p.getPodrozTam().getSuma() <= minCenaWylot) {
+                minCenaWylot = p.getPodrozTam().getSuma();
+                wylotIdx = i;
+            }
+            if(p.getPodrozPowrot().getSuma() < minCenaPowrot) {
+                minCenaPowrot = p.getPodrozPowrot().getSuma();
+                powrotIdx = i;
+            }
+        }
+
+        for (int i=0; i<podroze.size(); i++) {
+            Podroz p = podroze.get(i);
+            if((p.getPodrozTam().getSuma() == minCenaWylot) || i == wylotIdx) {
+                Log.i("TRIP", "Najtanszy wylot "+i);
+                p.setNajtanszyWylot(true);
+            }
+            if((p.getPodrozPowrot().getSuma() == minCenaPowrot) || i == powrotIdx) {
+                Log.i("TRIP", "Najtanszy powrot "+i);
+                p.setNajtanszyPowrot(true);
+            }
             cachedPodroze.add(p);
         }
+        Log.i("TRIP","Podroze : "+cachedPodroze);
         checkCache = true;
+    }
+
+    private void writeCityName(List<Lot> loty) {
+        List<Miasto> lista = MiastoRepository.getInstance(context).pobierzMiasta();
+        for(Lot l : loty) {
+            for(Miasto m : lista) {
+                if(m.getCode().equals(l.getSkad())) {
+                    l.setSkadFull(m.getName());
+                } else if(m.getCode().equals(l.getDokad())) {
+                    l.setDokadFull(m.getName());
+                }
+
+                if(l.getSkadFull()!=null && l.getDokadFull()!=null) {
+                    continue;
+                }
+            }
+        }
     }
 }

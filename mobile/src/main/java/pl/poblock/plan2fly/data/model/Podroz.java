@@ -8,6 +8,8 @@ public class Podroz {
     private Polaczenie podrozTam;
     private Polaczenie podrozPowrot;
     private Double cenaRazem;
+    private boolean najtanszyWylot;
+    private boolean najtanszyPowrot;
 
     public Podroz(Polaczenie podrozTam, Polaczenie podrozPowrot, Double cenaRazem) {
 
@@ -40,12 +42,31 @@ public class Podroz {
         this.cenaRazem = cenaRazem;
     }
 
+    public boolean isNajtanszyPowrot() {
+        return najtanszyPowrot;
+    }
+
+    public void setNajtanszyPowrot(boolean najtanszyPowrot) {
+        this.najtanszyPowrot = najtanszyPowrot;
+    }
+
+    public boolean isNajtanszyWylot() {
+        return najtanszyWylot;
+    }
+
+    public void setNajtanszyWylot(boolean najtanszyWylot) {
+        this.najtanszyWylot = najtanszyWylot;
+    }
+
+
     @Override
     public String toString() {
         return "Podroz{" +
-                "podrozTam='" + podrozTam + '\'' +
-                ", podrozPowrot='" + podrozPowrot + '\'' +
-                ", cenaRazem=" + cenaRazem +
+                "cenaRazem=" + cenaRazem +
+                ", podrozTam=" + podrozTam +
+                ", podrozPowrot=" + podrozPowrot +
+                ", najtanszyWylot=" + najtanszyWylot +
+                ", najtanszyPowrot=" + najtanszyPowrot +
                 '}';
     }
 }

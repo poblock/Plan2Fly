@@ -118,6 +118,60 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="54dp" />
                 </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ofertPrev"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_chevron_left" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ofertText"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical|center_horizontal"
+                        tools:text="10"
+                        android:text="10" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ofertNext"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <SeekBar
+                    android:id="@+id/ofertBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="20"
+                    android:progress="0"
+                    android:layout_weight="1"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_marginTop="14dp"
+                    android:mirrorForRtl="false" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/email_sign_in_button"

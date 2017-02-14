@@ -2,6 +2,8 @@ package pl.poblock.plan2fly.data.model;
 
 import java.util.List;
 
+import pl.poblock.plan2fly.common.MathUtils;
+
 /**
  * Created by krzysztof.poblocki on 2017-01-23.
  */
@@ -23,7 +25,7 @@ public class Polaczenie {
     }
 
     public Double getSuma() {
-        return suma;
+        return MathUtils.makeDouble(suma);
     }
 
     public void setSuma(Double suma) {
